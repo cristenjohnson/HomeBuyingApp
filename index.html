@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <title>Home Buyer</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles.css"/>
+        <style>
+            #home-list {
+                background-color: #f0f4f7;
+            }
+            .box {
+                padding: 50px;
+            }
+            .submit-button {
+                background-color: #f78f20;
+                border: none;
+            }
+        </style>
+        <script>
+            let house = {};
+
+            /*I'm using a DOMContentLoaded eventListener because my form is blank, and I want my event to fire after
+                the entire HTML page has been rendered */
+                document.addEventListener("DOMContentLoaded", function(){
+
+                document.getElementById("new-home").addEventListener("submit", function(event){
+                    event.preventDefault();
+                    let address = document.getElementById("address").value;
+                    let price = document.getElementById("price").value;
+                    house = {address: address, price: price};
+                    console.log(house);
+
+                    updateTable(house);
+                    //Here I'm going to clear the form for new inputs
+                    document.getElementById("address").value = null;
+                    document.getElementById("price").value = null;
+
+                });
+
+                })
+            /* When I submit, I want to create an update table function that's going to take a home
+                and populate the new data*/
+
+            let updateTable = function(home){
+                let row = document.createElement("TR");
+                let addressCol = document.createElement("TD");
+                let priceCol = document.createElement("TD");
+                addressCol.innerText = home.address;
+                priceCol.innerText = home.price;
+                row.appendChild(addressCol);
+                row.appendChild(priceCol);
+                document.getElementById("home-table").appendChild(row);
+            };
+            // let home = { address: "1234 Houston St", price: 350000};
+            // let json = JSON.stringify(home);
+            // console.log(json);
+            // console.log(JSON.parse(json));
+        </script>
+    </head>
+    <body>
+        <div class="container-fluid">
+        <div><h1>Home Buyer App</h1></div>
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>Add Home</h2>
+                <form id="new-home" action="#">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input class="form-control" id="address" type="text"/>
+                    </div>
+                        <div class="form-group">
+                        <label>Price</label>
+                        <input class="form-control" id="price" type="number"/>
+                    </div>
+                <div>
+                        <input class="btn btn-primary submit-button" id="submit" value="Save"/>
+                </div>
+            </form>
+            </div>
+            <!-- I want to view the data side by side -->
+            <div id="home-list" class="col-lg-6">
+                <h2>View All Homes</h2>
+                <table class="table" id="home-table">
+                    <tr><th>Address</th><th>Price</th></tr>
+                    <tr><td>1234 Houston St</td><td>350000</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
